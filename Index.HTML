@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas y Conversor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Mi Proyecto: Notas y Conversor</h1>
+        
+        <div class="sections-wrapper">
+            <!-- Sección de Notas Adhesivas -->
+            <section class="card">
+                <h2>Notas Adhesivas</h2>
+                <input type="text" id="nota-input" placeholder="Escribe una nueva nota...">
+                <button id="btn-agregar-nota">Agregar Nota</button>
+                <div id="notas-container" class="notes-grid"></div>
+            </section>
+
+            <!-- Sección de Conversor -->
+            <section class="card">
+                <h2>Conversor (Metros a Pies)</h2>
+                <input type="number" id="valor-metros" placeholder="Ingresa metros...">
+                <button id="btn-convertir">Convertir</button>
+                <p id="resultado-conversor"></p>
+            </section>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+}
+
+.main-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.sections-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 380px;
+    text-align: left;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #007bff;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.notes-grid {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.note-item {
+    background: #ffeb3b;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+    color: #333;
+}
+
+#resultado-conversor {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+// Lógica para Notas Adhesivas
+document.getElementById("btn-agregar-nota").addEventListener("click", function() {
+    const input = document.getElementById("nota-input");
+    const texto = input.value.trim();
+    
+    if (texto !== "") {
+        const contenedor = document.getElementById("notas-container");
+        const notaDiv = document.createElement("div");
+        notaDiv.className = "note-item";
+        notaDiv.innerText = texto;
+        contenedor.appendChild(notaDiv);
+        input.value = "";
+    } else {
+        alert("Por favor escribe algo para la nota.");
+    }
+});
+
+// Lógica para el Conversor (Metros a Pies)
+document.getElementById("btn-convertir").addEventListener("click", function() {
+    const inputMetros = document.getElementById("valor-metros").value;
+    const resultadoP = document.getElementById("resultado-conversor");
+    
+    if (inputMetros !== "" && !isNaN(inputMetros)) {
+        const metros = parseFloat(inputMetros);
+        const pies = (metros * 3.28084).toFixed(2);
+        resultadoP.innerText = `${metros} metros equivalen a ${pies} pies.`;
+    } else {
+        resultadoP.innerText = "Por favor ingresa un número válido.";
+    }
+});
